@@ -1,510 +1,1228 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Senha - CISA AutoS7</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Solicitação de Despesas de Viagem</title>
+
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
     <style>
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+
+        :root {
+
+            --azul: #1976a8;
+            --azul-escuro: #125a80;
+            --azul-claro: #e8f5fb;
+            --azul-muito-claro: #f4fbfe;
+
+            --cinza: #66727a;
+            --cinza-claro: #f4f6f8;
+            --cinza-borda: #dce3e8;
+
+            --branco: #ffffff;
+
+            --texto: #263238;
+
+            --verde: #198754;
+            --vermelho: #dc3545;
+
+        }
+
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #dceff7 0%,
+                    #edf3f6 50%,
+                    #dfe6ea 100%
+                );
+
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 30px 20px;
-            gap: 30px;
+
+            padding:
+                25px
+                15px;
+
+            color: var(--texto);
+
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
+
+        .app {
+
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+            max-width: 950px;
+
+            margin: auto;
+
         }
 
-        .container.v2 {
-            border-top: 4px solid #00b4d8;
+
+        /* =========================================
+           CABEÇALHO
+        ========================================= */
+
+        .header {
+
+            background:
+                var(--branco);
+
+            border-radius:
+                18px;
+
+            padding:
+                25px 30px;
+
+            margin-bottom:
+                20px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(
+                    40,
+                    70,
+                    90,
+                    0.12
+                );
+
+            border-top:
+                5px solid
+                var(--azul);
+
         }
 
-        .container.v1 {
-            border-top: 4px solid #f77f00;
+
+        .titulo-editavel {
+
+            width: 100%;
+
+            border:
+                none;
+
+            outline:
+                none;
+
+            background:
+                transparent;
+
+            color:
+                var(--azul);
+
+            font-size:
+                1.7rem;
+
+            font-weight:
+                700;
+
         }
 
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
+
+        .header p {
+
+            color:
+                var(--cinza);
+
+            font-size:
+                0.9rem;
+
+            margin-top:
+                8px;
+
         }
 
-        .logo h1 {
-            color: #0077b6;
-            font-size: 1.8em;
-            font-weight: 700;
-            letter-spacing: 2px;
+
+        /* =========================================
+           CARD
+        ========================================= */
+
+        .card {
+
+            background:
+                var(--branco);
+
+            border-radius:
+                18px;
+
+            padding:
+                25px;
+
+            margin-bottom:
+                18px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(
+                    40,
+                    70,
+                    90,
+                    0.10
+                );
+
         }
 
-        .logo .version {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.7em;
-            font-weight: 600;
-            margin-top: 5px;
+
+        .card-title {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            color:
+                var(--azul);
+
+            font-size:
+                1.05rem;
+
+            font-weight:
+                700;
+
+            margin-bottom:
+                20px;
+
+            padding-bottom:
+                12px;
+
+            border-bottom:
+                1px solid
+                var(--cinza-borda);
+
         }
 
-        .logo .version.v1 {
-            background: #fff3e0;
-            color: #f77f00;
+
+        .card-number {
+
+            width:
+                28px;
+
+            height:
+                28px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            background:
+                var(--azul-claro);
+
+            color:
+                var(--azul);
+
+            border-radius:
+                50%;
+
+            font-size:
+                0.85rem;
+
+            font-weight:
+                bold;
+
         }
 
-        .logo .version.v2 {
-            background: #e0f7fa;
-            color: #00838f;
+
+        /* =========================================
+           SOLICITAÇÃO
+        ========================================= */
+
+        .solicitacao {
+
+            position:
+                relative;
+
+            background:
+                var(--branco);
+
+            border-radius:
+                18px;
+
+            margin-bottom:
+                25px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(
+                    40,
+                    70,
+                    90,
+                    0.10
+                );
+
+            overflow:
+                hidden;
+
         }
 
-        .logo p {
-            color: #666;
-            font-size: 0.85em;
-            margin-top: 8px;
+
+        .solicitacao-header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1976a8,
+                    #4fa8cf
+                );
+
+            color:
+                white;
+
+            padding:
+                16px 22px;
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
         }
+
+
+        .solicitacao-header strong {
+
+            font-size:
+                1rem;
+
+        }
+
+
+        .btn-remover-solicitacao {
+
+            border:
+                none;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.18
+                );
+
+            color:
+                white;
+
+            padding:
+                7px 12px;
+
+            border-radius:
+                7px;
+
+            cursor:
+                pointer;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .btn-remover-solicitacao:hover {
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.30
+                );
+
+        }
+
+
+        .solicitacao-body {
+
+            padding:
+                25px;
+
+        }
+
+
+        /* =========================================
+           FORM
+        ========================================= */
+
+        .form-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    1fr
+                );
+
+            gap:
+                18px;
+
+        }
+
 
         .form-group {
-            margin-bottom: 20px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
         }
 
-        .form-group label {
-            display: block;
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 0.95em;
+
+        .form-group.full {
+
+            grid-column:
+                1 / -1;
+
         }
 
-        .form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1.1em;
-            transition: border-color 0.3s;
-            outline: none;
+
+        label {
+
+            font-size:
+                0.85rem;
+
+            font-weight:
+                600;
+
+            color:
+                #455a64;
+
+            margin-bottom:
+                7px;
+
         }
 
-        .form-group input:focus {
-            border-color: #0077b6;
+
+        input,
+        textarea,
+        select {
+
+            width:
+                100%;
+
+            padding:
+                13px 14px;
+
+            border:
+                1px solid
+                var(--cinza-borda);
+
+            border-radius:
+                9px;
+
+            background:
+                #fbfcfd;
+
+            color:
+                var(--texto);
+
+            font-family:
+                inherit;
+
+            font-size:
+                0.95rem;
+
+            outline:
+                none;
+
+            transition:
+                0.2s;
+
         }
 
-        .form-group input::placeholder {
-            color: #aaa;
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+
+            border-color:
+                var(--azul-medio);
+
+            background:
+                white;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(
+                    79,
+                    168,
+                    207,
+                    0.12
+                );
+
         }
 
-        .btn-gerar {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #0077b6, #00b4d8);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+
+        textarea {
+
+            min-height:
+                100px;
+
+            resize:
+                vertical;
+
         }
 
-        .btn-gerar:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 119, 182, 0.4);
+
+        /* =========================================
+           VEÍCULO
+        ========================================= */
+
+        .vehicle-options {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                15px;
+
         }
 
-        .btn-gerar:active {
-            transform: translateY(0);
+
+        .vehicle-option {
+
+            position:
+                relative;
+
         }
 
-        .container.v1 .btn-gerar {
-            background: linear-gradient(135deg, #f77f00, #fcbf49);
+
+        .vehicle-option input {
+
+            position:
+                absolute;
+
+            opacity:
+                0;
+
+            pointer-events:
+                none;
+
         }
 
-        .container.v1 .btn-gerar:hover {
-            box-shadow: 0 8px 25px rgba(247, 127, 0, 0.4);
+
+        .vehicle-label {
+
+            display:
+                block;
+
+            padding:
+                16px;
+
+            border:
+                2px solid
+                var(--cinza-borda);
+
+            border-radius:
+                12px;
+
+            text-align:
+                center;
+
+            cursor:
+                pointer;
+
+            color:
+                var(--cinza);
+
+            font-weight:
+                600;
+
+            transition:
+                0.2s;
+
         }
 
-        .resultado {
-            margin-top: 25px;
-            padding: 25px;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            border-radius: 12px;
-            text-align: center;
-            display: none;
+
+        .vehicle-label:hover {
+
+            border-color:
+                #4fa8cf;
+
+            background:
+                var(--azul-claro);
+
         }
 
-        .resultado.show {
-            display: block;
-            animation: fadeIn 0.4s ease;
+
+        .vehicle-option input:checked
+        + .vehicle-label {
+
+            border-color:
+                var(--azul);
+
+            background:
+                var(--azul-claro);
+
+            color:
+                var(--azul);
+
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        /* =========================================
+           ROTEIRO
+        ========================================= */
+
+        .route-item {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                35px
+                1fr
+                42px;
+
+            gap:
+                10px;
+
+            align-items:
+                center;
+
+            margin-bottom:
+                12px;
+
         }
 
-        .resultado label {
-            color: #90e0ef;
-            font-size: 0.85em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+
+        .route-icon {
+
+            width:
+                30px;
+
+            height:
+                30px;
+
+            border-radius:
+                50%;
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            background:
+                var(--azul-claro);
+
+            color:
+                var(--azul);
+
+            font-weight:
+                bold;
+
+            font-size:
+                0.8rem;
+
         }
 
-        .resultado .senha {
-            color: #00ff88;
-            font-size: 2em;
-            font-weight: 700;
-            font-family: 'Courier New', monospace;
-            margin-top: 10px;
-            letter-spacing: 3px;
-            word-break: break-all;
+
+        .route-icon.start {
+
+            background:
+                #eef1f3;
+
+            color:
+                #54636b;
+
         }
 
-        .btn-copiar {
-            margin-top: 15px;
-            padding: 10px 25px;
-            background: rgba(0, 255, 136, 0.15);
-            border: 1px solid #00ff88;
-            color: #00ff88;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.85em;
-            font-weight: 600;
-            transition: background 0.3s;
+
+        .route-icon.final {
+
+            background:
+                #e7f6ee;
+
+            color:
+                var(--verde);
+
         }
 
-        .btn-copiar:hover {
-            background: rgba(0, 255, 136, 0.3);
+
+        .remove-stop {
+
+            width:
+                38px;
+
+            height:
+                38px;
+
+            border:
+                none;
+
+            border-radius:
+                8px;
+
+            background:
+                #fff0f1;
+
+            color:
+                var(--vermelho);
+
+            cursor:
+                pointer;
+
+            font-size:
+                1.1rem;
+
         }
 
-        .btn-hoje {
-            padding: 8px 16px;
-            background: #e8f4f8;
-            border: 1px solid #0077b6;
-            color: #0077b6;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.8em;
-            font-weight: 600;
-            margin-top: 8px;
-            transition: background 0.3s;
+
+        .remove-stop:hover {
+
+            background:
+                #ffd9dd;
+
         }
 
-        .btn-hoje:hover {
-            background: #d0ecf4;
+
+        .add-stop {
+
+            width:
+                100%;
+
+            padding:
+                11px;
+
+            margin-top:
+                5px;
+
+            border:
+                1px dashed
+                #4fa8cf;
+
+            background:
+                var(--azul-claro);
+
+            color:
+                var(--azul);
+
+            border-radius:
+                9px;
+
+            cursor:
+                pointer;
+
+            font-weight:
+                600;
+
         }
 
-        .info {
-            margin-top: 25px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #0077b6;
+
+        .add-stop:hover {
+
+            background:
+                #d8edf7;
+
         }
 
-        .container.v1 .info {
-            border-left-color: #f77f00;
+
+        /* =========================================
+           NOVA SOLICITAÇÃO
+        ========================================= */
+
+        .nova-solicitacao {
+
+            width:
+                100%;
+
+            border:
+                2px dashed
+                var(--azul-medio);
+
+            background:
+                var(--azul-muito-claro);
+
+            color:
+                var(--azul);
+
+            padding:
+                16px;
+
+            border-radius:
+                12px;
+
+            cursor:
+                pointer;
+
+            font-weight:
+                700;
+
+            font-size:
+                0.95rem;
+
+            margin-bottom:
+                20px;
+
+            transition:
+                0.2s;
+
         }
 
-        .info p {
-            color: #555;
-            font-size: 0.8em;
-            line-height: 1.6;
+
+        .nova-solicitacao:hover {
+
+            background:
+                var(--azul-claro);
+
+            transform:
+                translateY(-1px);
+
         }
 
-        .error {
-            color: #e63946;
-            font-size: 0.85em;
-            margin-top: 5px;
-            display: none;
+
+        /* =========================================
+           BOTÃO PDF
+        ========================================= */
+
+        .actions {
+
+            background:
+                var(--branco);
+
+            padding:
+                20px;
+
+            border-radius:
+                18px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(
+                    40,
+                    70,
+                    90,
+                    0.10
+                );
+
+            margin-bottom:
+                20px;
+
         }
 
-        .error.show {
-            display: block;
+
+        .btn-pdf {
+
+            width:
+                100%;
+
+            border:
+                none;
+
+            padding:
+                17px;
+
+            border-radius:
+                11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1976a8,
+                    #4fa8cf
+                );
+
+            color:
+                white;
+
+            font-size:
+                1rem;
+
+            font-weight:
+                700;
+
+            cursor:
+                pointer;
+
+            box-shadow:
+                0 7px 18px
+                rgba(
+                    25,
+                    118,
+                    168,
+                    0.25
+                );
+
+            transition:
+                0.2s;
+
         }
 
-        .page-title {
-            text-align: center;
-            color: white;
-            margin-bottom: 10px;
+
+        .btn-pdf:hover {
+
+            transform:
+                translateY(-2px);
+
         }
 
-        .page-title h1 {
-            font-size: 1.5em;
-            font-weight: 300;
-            letter-spacing: 3px;
+
+        .footer {
+
+            text-align:
+                center;
+
+            color:
+                #73818a;
+
+            font-size:
+                0.75rem;
+
+            padding:
+                5px;
+
         }
 
-        @media (max-width: 480px) {
-            .container {
-                padding: 25px;
+
+        /* =========================================
+           RESPONSIVO
+        ========================================= */
+
+        @media (
+            max-width: 650px
+        ) {
+
+            body {
+
+                padding:
+                    12px 8px;
+
             }
-            .logo h1 {
-                font-size: 1.4em;
+
+
+            .header,
+            .card,
+            .actions {
+
+                padding:
+                    20px;
+
+                border-radius:
+                    14px;
+
             }
-            .resultado .senha {
-                font-size: 1.5em;
+
+
+            .form-grid {
+
+                grid-template-columns:
+                    1fr;
+
             }
+
+
+            .form-group.full {
+
+                grid-column:
+                    auto;
+
+            }
+
+
+            .vehicle-options {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .route-item {
+
+                grid-template-columns:
+                    32px
+                    1fr
+                    38px;
+
+                gap:
+                    7px;
+
+            }
+
+
+            .titulo-editavel {
+
+                font-size:
+                    1.35rem;
+
+            }
+
+
+            .solicitacao-body {
+
+                padding:
+                    18px;
+
+            }
+
         }
+
     </style>
+
 </head>
+
+
 <body>
 
-    <!-- ==================== NOVO ALGORITMO (V2 - Módulo 17) ==================== -->
-    <div class="container v2">
-        <div class="logo">
-            <h1>CISA AutoS7</h1>
-            <span class="version v2">V2 - ALGORITMO UNIVERSAL</span>
-            <p>Funciona para qualquer serial + qualquer data</p>
-        </div>
 
-        <div class="form-group">
-            <label>Número de Série (5 dígitos)</label>
-            <input type="text" id="serial-v2" placeholder="Ex: 28617" maxlength="5" inputmode="numeric">
-            <span class="error" id="error-serial-v2">Digite exatamente 5 dígitos numéricos</span>
-        </div>
+<div class="app">
 
-        <div class="form-group">
-            <label>Data (DD/MM/AAAA)</label>
-            <input type="text" id="data-v2" placeholder="Ex: 17/08/2026" maxlength="10">
-            <button class="btn-hoje" onclick="preencherHoje('data-v2')">Usar data de hoje</button>
-            <span class="error" id="error-data-v2">Digite a data no formato DD/MM/AAAA</span>
-        </div>
 
-        <button class="btn-gerar" onclick="gerarSenhaV2()">Gerar Senha</button>
+    <!-- =========================================
+         CABEÇALHO PRINCIPAL
+    ========================================== -->
 
-        <div class="resultado" id="resultado-v2">
-            <label>Sua senha é</label>
-            <div class="senha" id="senha-output-v2"></div>
-            <button class="btn-copiar" onclick="copiarSenha('senha-output-v2')">Copiar</button>
-        </div>
+    <div class="header">
 
-        <div class="info">
-            <p><strong>Algoritmo Universal (mod 17):</strong> Compatível com Autoclaves e Termodesinfectoras CISA com firmware AutoS7 V2.05.02. Usa número de série + dia + mês. Validado com 3 equipamentos diferentes.</p>
-        </div>
+        <input
+            type="text"
+            id="titulo"
+            class="titulo-editavel"
+            value="SOLICITAÇÃO DE DESPESAS DE VIAGEM"
+        >
+
+        <p>
+            Preencha uma ou mais solicitações e gere todas
+            em um único documento PDF.
+        </p>
+
     </div>
 
-    <!-- ==================== ALGORITMO ANTIGO (V1 - Offsets Fixos) ==================== -->
-    <div class="container v1">
-        <div class="logo">
-            <h1>CISA AutoS7</h1>
-            <span class="version v1">V1 - OFFSET FIXO (SERIAL 28617)</span>
-            <p>Algoritmo inicial - chave fixa por posição</p>
-        </div>
 
-        <div class="form-group">
-            <label>Número de Série (5 dígitos)</label>
-            <input type="text" id="serial-v1" placeholder="Ex: 28617" maxlength="5" inputmode="numeric">
-            <span class="error" id="error-serial-v1">Digite exatamente 5 dígitos numéricos</span>
-        </div>
+    <!-- =========================================
+         SOLICITAÇÕES
+    ========================================== -->
 
-        <div class="form-group">
-            <label>Data (DD/MM/AAAA)</label>
-            <input type="text" id="data-v1" placeholder="Ex: 06/08/2026" maxlength="10">
-            <button class="btn-hoje" onclick="preencherHoje('data-v1')">Usar data de hoje</button>
-            <span class="error" id="error-data-v1">Digite a data no formato DD/MM/AAAA</span>
-        </div>
+    <div id="solicitacoes"></div>
 
-        <button class="btn-gerar" onclick="gerarSenhaV1()">Gerar Senha</button>
 
-        <div class="resultado" id="resultado-v1">
-            <label>Sua senha é</label>
-            <div class="senha" id="senha-output-v1"></div>
-            <button class="btn-copiar" onclick="copiarSenha('senha-output-v1')">Copiar</button>
-        </div>
+    <!-- =========================================
+         NOVA SOLICITAÇÃO
+    ========================================== -->
 
-        <div class="info">
-            <p><strong>Algoritmo V1 (Offsets Fixos):</strong> Cifra de substituição posicional. Concatena serial(5 dígitos) + data(DDMMAAAA) e aplica chave fixa [B,9,9,D,A,F,7,9,A,3,2,D,B] mod 16. Validado apenas para serial 28617.</p>
-        </div>
+    <button
+        class="nova-solicitacao"
+        onclick="adicionarSolicitacao()"
+    >
+        ＋ ADICIONAR NOVA SOLICITAÇÃO
+    </button>
+
+
+    <!-- =========================================
+         GERAR PDF
+    ========================================== -->
+
+    <div class="actions">
+
+        <button
+            class="btn-pdf"
+            onclick="gerarPDF()"
+        >
+            📄 GERAR TODAS AS SOLICITAÇÕES EM PDF
+        </button>
+
     </div>
 
-    <script>
-        // ==================== ALGORITMO V2 (Módulo 17 - Universal) ====================
-        const COEFS_V2 = [
-            [0, 15, 1],   // pos 0
-            [0, 12, 6],   // pos 1
-            [0, 10, 5],   // pos 2
-            [0, 1, 1],    // pos 3
-            [0, 5, 7],    // pos 4
-            [0, 12, 12],  // pos 5
-            [8, 10, 3],   // pos 6
-            [7, 11, 11],  // pos 7
-            [0, 7, 12],   // pos 8
-            [0, 9, 13],   // pos 9
-            [0, 9, 2],    // pos 10
-            [6, 3, 10],   // pos 11
-            [15, 13, 11]  // pos 12
-        ];
 
-        function calcSenhaV2(serial, dia, mes) {
-            const HEX = '0123456789ABCDEF';
-            let senha = '';
-            for (let i = 0; i < 13; i++) {
-                const [a, b, c] = COEFS_V2[i];
-                let valor = (a * serial + b * dia + c * mes) % 17;
-                if (valor > 15) valor = valor % 16;
-                senha += HEX[valor];
-            }
-            return senha;
-        }
+    <div class="footer">
 
-        function gerarSenhaV2() {
-            const serial = document.getElementById('serial-v2').value.trim();
-            const data = document.getElementById('data-v2').value.trim();
+        Gerador de Solicitação de Despesas de Viagem
 
-            document.getElementById('error-serial-v2').classList.remove('show');
-            document.getElementById('error-data-v2').classList.remove('show');
+    </div>
 
-            let temErro = false;
-            if (!validarSerial(serial)) {
-                document.getElementById('error-serial-v2').classList.add('show');
-                temErro = true;
-            }
-            if (!validarData(data)) {
-                document.getElementById('error-data-v2').classList.add('show');
-                temErro = true;
-            }
-            if (temErro) {
-                document.getElementById('resultado-v2').classList.remove('show');
-                return;
-            }
 
-            const partes = data.split('/');
-            const dia = parseInt(partes[0]);
-            const mes = parseInt(partes[1]);
-            const serialNum = parseInt(serial);
+</div>
 
-            const senha = calcSenhaV2(serialNum, dia, mes);
-            document.getElementById('senha-output-v2').textContent = senha;
-            document.getElementById('resultado-v2').classList.add('show');
-        }
 
-        // ==================== ALGORITMO V1 (Offsets Fixos) ====================
-        const CHAVE_V1 = [11, 9, 9, 13, 10, 15, 7, 9, 10, 3, 2, 13, 11];
 
-        function calcSenhaV1(serialStr, dia, mes, ano) {
-            const HEX = '0123456789ABCDEF';
-            const diaStr = String(dia).padStart(2, '0');
-            const mesStr = String(mes).padStart(2, '0');
-            const anoStr = String(ano);
-            const entrada = serialStr + diaStr + mesStr + anoStr;
+<script>
 
-            let senha = '';
-            for (let i = 0; i < 13; i++) {
-                const digito = parseInt(entrada[i]);
-                const valor = (digito + CHAVE_V1[i]) % 16;
-                senha += HEX[valor];
-            }
-            return senha;
-        }
 
-        function gerarSenhaV1() {
-            const serial = document.getElementById('serial-v1').value.trim();
-            const data = document.getElementById('data-v1').value.trim();
+/* =========================================================
+   VARIÁVEIS
+========================================================= */
 
-            document.getElementById('error-serial-v1').classList.remove('show');
-            document.getElementById('error-data-v1').classList.remove('show');
+let contadorSolicitacoes = 0;
 
-            let temErro = false;
-            if (!validarSerial(serial)) {
-                document.getElementById('error-serial-v1').classList.add('show');
-                temErro = true;
-            }
-            if (!validarData(data)) {
-                document.getElementById('error-data-v1').classList.add('show');
-                temErro = true;
-            }
-            if (temErro) {
-                document.getElementById('resultado-v1').classList.remove('show');
-                return;
-            }
 
-            const partes = data.split('/');
-            const dia = parseInt(partes[0]);
-            const mes = parseInt(partes[1]);
-            const ano = parseInt(partes[2]);
+/* =========================================================
+   ADICIONAR SOLICITAÇÃO
+========================================================= */
 
-            const senha = calcSenhaV1(serial, dia, mes, ano);
-            document.getElementById('senha-output-v1').textContent = senha;
-            document.getElementById('resultado-v1').classList.add('show');
-        }
+function adicionarSolicitacao() {
 
-        // ==================== FUNÇÕES COMPARTILHADAS ====================
-        function preencherHoje(inputId) {
-            const hoje = new Date();
-            const dia = String(hoje.getDate()).padStart(2, '0');
-            const mes = String(hoje.getMonth() + 1).padStart(2, '0');
-            const ano = hoje.getFullYear();
-            document.getElementById(inputId).value = `${dia}/${mes}/${ano}`;
-        }
+    contadorSolicitacoes++;
 
-        function validarSerial(serial) {
-            return /^\d{5}$/.test(serial);
-        }
+    const numero =
+        contadorSolicitacoes;
 
-        function validarData(data) {
-            const regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-            const match = data.match(regex);
-            if (!match) return false;
-            const dia = parseInt(match[1]);
-            const mes = parseInt(match[2]);
-            if (dia < 1 || dia > 31) return false;
-            if (mes < 1 || mes > 12) return false;
-            return true;
-        }
 
-        function copiarSenha(elementId) {
-            const senha = document.getElementById(elementId).textContent;
-            navigator.clipboard.writeText(senha).then(() => {
-                const btn = event.target;
-                btn.textContent = 'Copiado!';
-                setTimeout(() => { btn.textContent = 'Copiar'; }, 2000);
-            });
-        }
+    const container =
+        document.getElementById(
+            "solicitacoes"
+        );
 
-        // Máscaras de input
-        document.querySelectorAll('[id^="data-"]').forEach(input => {
-            input.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\D/g, '');
-                if (value.length > 2) value = value.slice(0, 2) + '/' + value.slice(2);
-                if (value.length > 5) value = value.slice(0, 5) + '/' + value.slice(5);
-                if (value.length > 10) value = value.slice(0, 10);
-                e.target.value = value;
-            });
-        });
 
-        document.querySelectorAll('[id^="serial-"]').forEach(input => {
-            input.addEventListener('input', function(e) {
-                e.target.value = e.target.value.replace(/\D/g, '').slice(0, 5);
-            });
-        });
+    const solicitacao =
+        document.createElement(
+            "div"
+        );
 
-        // Enter para gerar (usa o formulário mais próximo)
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const active = document.activeElement;
-                if (active && active.closest('.v2')) {
-                    gerarSenhaV2();
-                } else if (active && active.closest('.v1')) {
-                    gerarSenhaV1();
-                }
-            }
-        });
-    </script>
-</body>
-</html>
+
+    solicitacao.className =
+        "solicitacao";
+
+
+    solicitacao.dataset.id =
+        numero;
+
+
+    solicitacao.innerHTML = `
+
+        <div class="solicitacao-header">
+
+            <strong>
+                Solicitação ${numero}
+            </strong>
+
+            <button
+                type="button"
+                class="btn-remover-solicitacao"
+                onclick="removerSolicitacao(this)"
+            >
+                Remover
+            </button>
+
+        </div>
+
+
+        <div class="solicitacao-body">
+
+
+            <!-- DADOS DOS TÉCNICOS -->
+
+            <div class="card-title">
+
+                <span class="card-number">
+                    1
+                </span>
+
+                Técnicos responsáveis pela viagem
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Técnico responsável
+                    </label>
+
+                    <input
+                        type="text"
+                        class="tecnico-responsavel"
+                        placeholder="Nome do técnico responsável"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Técnico acompanhante
+                        <span style="
+                            color:#8a969d;
+                            font-weight:normal;
+                        ">
+                            (opcional)
+                        </span>
+                    </label>
+
+                    <input
+                        type="text"
+                        class="tecnico-acompanhante"
+                        placeholder="Nome do técnico acompanhante"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- VEÍCULO -->
+
+            <div
+                class="card-title"
+                style="margin-top:30px;"
+            >
+
+                <span class="card-number">
+                    2
+                </span>
+
+                Veículo utilizado
+
+            </div>
+
+
+            <div class="vehicle-options">
+
+
+                <div class="vehicle-option">
+
+                    <input
+                        type="radio"
+                        name="veiculo-${numero}"
+                        value="Veículo próprio"
+                    >
+
+                    <label class="vehicl
