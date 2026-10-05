@@ -12,7 +12,10 @@
 
     <title>Solicitação de Despesas de Viagem</title>
 
-    <!-- jsPDF -->
+    <!-- =====================================================
+         jsPDF
+    ====================================================== -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 
@@ -28,12 +31,19 @@
         :root {
 
             --azul: #1976a8;
+
             --azul-escuro: #125a80;
+
+            --azul-medio: #4fa8cf;
+
             --azul-claro: #e8f5fb;
+
             --azul-muito-claro: #f4fbfe;
 
             --cinza: #66727a;
+
             --cinza-claro: #f4f6f8;
+
             --cinza-borda: #dce3e8;
 
             --branco: #ffffff;
@@ -41,6 +51,7 @@
             --texto: #263238;
 
             --verde: #198754;
+
             --vermelho: #dc3545;
 
         }
@@ -64,10 +75,10 @@
             min-height: 100vh;
 
             padding:
-                25px
-                15px;
+                25px 15px;
 
-            color: var(--texto);
+            color:
+                var(--texto);
 
         }
 
@@ -83,9 +94,9 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            CABEÇALHO
-        ========================================= */
+        ====================================================== */
 
         .header {
 
@@ -121,14 +132,11 @@
 
             width: 100%;
 
-            border:
-                none;
+            border: none;
 
-            outline:
-                none;
+            outline: none;
 
-            background:
-                transparent;
+            background: transparent;
 
             color:
                 var(--azul);
@@ -156,11 +164,13 @@
         }
 
 
-        /* =========================================
-           CARD
-        ========================================= */
+        /* =====================================================
+           SOLICITAÇÃO
+        ====================================================== */
 
-        .card {
+        .solicitacao {
+
+            position: relative;
 
             background:
                 var(--branco);
@@ -168,11 +178,8 @@
             border-radius:
                 18px;
 
-            padding:
-                25px;
-
             margin-bottom:
-                18px;
+                25px;
 
             box-shadow:
                 0 8px 25px
@@ -183,8 +190,101 @@
                     0.10
                 );
 
+            overflow:
+                hidden;
+
         }
 
+
+        .solicitacao-header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1976a8,
+                    #4fa8cf
+                );
+
+            color:
+                white;
+
+            padding:
+                16px 22px;
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+        }
+
+
+        .solicitacao-header strong {
+
+            font-size:
+                1rem;
+
+        }
+
+
+        .btn-remover-solicitacao {
+
+            border: none;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.18
+                );
+
+            color:
+                white;
+
+            padding:
+                7px 12px;
+
+            border-radius:
+                7px;
+
+            cursor:
+                pointer;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .btn-remover-solicitacao:hover {
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.30
+                );
+
+        }
+
+
+        .solicitacao-body {
+
+            padding:
+                25px;
+
+        }
+
+
+        /* =====================================================
+           TÍTULOS DE SEÇÃO
+        ====================================================== */
 
         .card-title {
 
@@ -251,132 +351,15 @@
             font-weight:
                 bold;
 
-        }
-
-
-        /* =========================================
-           SOLICITAÇÃO
-        ========================================= */
-
-        .solicitacao {
-
-            position:
-                relative;
-
-            background:
-                var(--branco);
-
-            border-radius:
-                18px;
-
-            margin-bottom:
-                25px;
-
-            box-shadow:
-                0 8px 25px
-                rgba(
-                    40,
-                    70,
-                    90,
-                    0.10
-                );
-
-            overflow:
-                hidden;
+            flex-shrink:
+                0;
 
         }
 
 
-        .solicitacao-header {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #1976a8,
-                    #4fa8cf
-                );
-
-            color:
-                white;
-
-            padding:
-                16px 22px;
-
-            display:
-                flex;
-
-            justify-content:
-                space-between;
-
-            align-items:
-                center;
-
-        }
-
-
-        .solicitacao-header strong {
-
-            font-size:
-                1rem;
-
-        }
-
-
-        .btn-remover-solicitacao {
-
-            border:
-                none;
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.18
-                );
-
-            color:
-                white;
-
-            padding:
-                7px 12px;
-
-            border-radius:
-                7px;
-
-            cursor:
-                pointer;
-
-            font-weight:
-                600;
-
-        }
-
-
-        .btn-remover-solicitacao:hover {
-
-            background:
-                rgba(
-                    255,
-                    255,
-                    255,
-                    0.30
-                );
-
-        }
-
-
-        .solicitacao-body {
-
-            padding:
-                25px;
-
-        }
-
-
-        /* =========================================
-           FORM
-        ========================================= */
+        /* =====================================================
+           FORMULÁRIO
+        ====================================================== */
 
         .form-grid {
 
@@ -406,14 +389,6 @@
         }
 
 
-        .form-group.full {
-
-            grid-column:
-                1 / -1;
-
-        }
-
-
         label {
 
             font-size:
@@ -432,8 +407,7 @@
 
 
         input,
-        textarea,
-        select {
+        textarea {
 
             width:
                 100%;
@@ -470,8 +444,7 @@
 
 
         input:focus,
-        textarea:focus,
-        select:focus {
+        textarea:focus {
 
             border-color:
                 var(--azul-medio);
@@ -502,9 +475,9 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            VEÍCULO
-        ========================================= */
+        ====================================================== */
 
         .vehicle-options {
 
@@ -578,7 +551,7 @@
         .vehicle-label:hover {
 
             border-color:
-                #4fa8cf;
+                var(--azul-medio);
 
             background:
                 var(--azul-claro);
@@ -601,9 +574,9 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            ROTEIRO
-        ========================================= */
+        ====================================================== */
 
         .route-item {
 
@@ -611,9 +584,7 @@
                 grid;
 
             grid-template-columns:
-                35px
-                1fr
-                42px;
+                35px 1fr 42px;
 
             gap:
                 10px;
@@ -734,7 +705,7 @@
 
             border:
                 1px dashed
-                #4fa8cf;
+                var(--azul-medio);
 
             background:
                 var(--azul-claro);
@@ -762,9 +733,9 @@
         }
 
 
-        /* =========================================
-           NOVA SOLICITAÇÃO
-        ========================================= */
+        /* =====================================================
+           BOTÃO NOVA SOLICITAÇÃO
+        ====================================================== */
 
         .nova-solicitacao {
 
@@ -816,9 +787,9 @@
         }
 
 
-        /* =========================================
-           BOTÃO PDF
-        ========================================= */
+        /* =====================================================
+           AÇÕES
+        ====================================================== */
 
         .actions {
 
@@ -919,9 +890,9 @@
         }
 
 
-        /* =========================================
+        /* =====================================================
            RESPONSIVO
-        ========================================= */
+        ====================================================== */
 
         @media (
             max-width: 650px
@@ -935,9 +906,7 @@
             }
 
 
-            .header,
-            .card,
-            .actions {
+            .header {
 
                 padding:
                     20px;
@@ -956,14 +925,6 @@
             }
 
 
-            .form-group.full {
-
-                grid-column:
-                    auto;
-
-            }
-
-
             .vehicle-options {
 
                 grid-template-columns:
@@ -975,9 +936,7 @@
             .route-item {
 
                 grid-template-columns:
-                    32px
-                    1fr
-                    38px;
+                    32px 1fr 38px;
 
                 gap:
                     7px;
@@ -1000,6 +959,14 @@
 
             }
 
+
+            .solicitacao-header {
+
+                padding:
+                    14px 16px;
+
+            }
+
         }
 
     </style>
@@ -1013,9 +980,9 @@
 <div class="app">
 
 
-    <!-- =========================================
-         CABEÇALHO PRINCIPAL
-    ========================================== -->
+    <!-- =====================================================
+         CABEÇALHO
+    ====================================================== -->
 
     <div class="header">
 
@@ -1034,36 +1001,42 @@
     </div>
 
 
-    <!-- =========================================
+    <!-- =====================================================
          SOLICITAÇÕES
-    ========================================== -->
+    ====================================================== -->
 
     <div id="solicitacoes"></div>
 
 
-    <!-- =========================================
+    <!-- =====================================================
          NOVA SOLICITAÇÃO
-    ========================================== -->
+    ====================================================== -->
 
     <button
+        type="button"
         class="nova-solicitacao"
         onclick="adicionarSolicitacao()"
     >
+
         ＋ ADICIONAR NOVA SOLICITAÇÃO
+
     </button>
 
 
-    <!-- =========================================
+    <!-- =====================================================
          GERAR PDF
-    ========================================== -->
+    ====================================================== -->
 
     <div class="actions">
 
         <button
+            type="button"
             class="btn-pdf"
             onclick="gerarPDF()"
         >
+
             📄 GERAR TODAS AS SOLICITAÇÕES EM PDF
+
         </button>
 
     </div>
@@ -1084,7 +1057,7 @@
 
 
 /* =========================================================
-   VARIÁVEIS
+   CONTROLE
 ========================================================= */
 
 let contadorSolicitacoes = 0;
@@ -1118,10 +1091,6 @@ function adicionarSolicitacao() {
         "solicitacao";
 
 
-    solicitacao.dataset.id =
-        numero;
-
-
     solicitacao.innerHTML = `
 
         <div class="solicitacao-header">
@@ -1135,7 +1104,9 @@ function adicionarSolicitacao() {
                 class="btn-remover-solicitacao"
                 onclick="removerSolicitacao(this)"
             >
+
                 Remover
+
             </button>
 
         </div>
@@ -1144,7 +1115,7 @@ function adicionarSolicitacao() {
         <div class="solicitacao-body">
 
 
-            <!-- DADOS DOS TÉCNICOS -->
+            <!-- TÉCNICOS -->
 
             <div class="card-title">
 
@@ -1178,13 +1149,18 @@ function adicionarSolicitacao() {
                 <div class="form-group">
 
                     <label>
+
                         Técnico acompanhante
-                        <span style="
-                            color:#8a969d;
-                            font-weight:normal;
-                        ">
+
+                        <span
+                            style="
+                                color:#8a969d;
+                                font-weight:normal;
+                            "
+                        >
                             (opcional)
                         </span>
+
                     </label>
 
                     <input
@@ -1225,4 +1201,13 @@ function adicionarSolicitacao() {
                         value="Veículo próprio"
                     >
 
-                    <label class="vehicl
+                    <label class="vehicle-label">
+
+                        🚗 Veículo próprio
+
+                    </label>
+
+                </div>
+
+
+ 
